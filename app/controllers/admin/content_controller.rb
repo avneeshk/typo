@@ -185,6 +185,8 @@ class Admin::ContentController < Admin::BaseController
     @images = Resource.images_by_created_at.page(params[:page]).per(10)
     @resources = Resource.without_images_by_filename
     @macros = TextFilter.macro_filters
+    
+    @current_user = User.find_by_id(session['user_id'].to_i)
     render 'new'
   end
 
