@@ -36,6 +36,7 @@ describe ArticlesController do
     before :each do
       Factory.create(:article)
       get 'index'
+      
     end
 
     it 'should be render template index' do

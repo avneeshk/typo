@@ -12,6 +12,7 @@ describe Article do
     Blog.stub(:default) { @blog }
 
     @articles = []
+    
   end
 
   def assert_results_are(*expected)
