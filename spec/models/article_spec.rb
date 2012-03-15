@@ -615,7 +615,7 @@ describe Article do
       second_fake_article = mock('Article')
       second_fake_article.stub(:id).and_return('2')
 
-     mergedArticle = first_article.merge('2')
+     mergedArticle = first_article.merge_articles('2')
      mergedArticleContent =mergedArticle.body
      expectedMergedContent = first_article.body + "\n\n" + second_article.body
      expectedMergedContent.should == mergedArticleContent
@@ -625,7 +625,7 @@ describe Article do
     it 'should return a merged article with only one author' do    
       a = Factory(:article, :author => 'Rohit', :id => 1)
       b = Factory(:article, :author => 'Avneesh', :id => 2)
-      mergedArticle = a.merge(b.id)
+      mergedArticle = a.merge_articles(b.id)
       mergedAuthor = mergedArticle.author
       mergedAuthor.should == a.author or mergedAuthor.should == b.author
     end
