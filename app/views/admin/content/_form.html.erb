@@ -150,12 +150,16 @@
   </div>
 
   <%= if @current_user.admin? %>
-  	<%= puts @current_user.id %>
+  	<div class='merge_form'>
+		<h4><%= _("Merge Form") %></h4>
+		<%= text_field :article, :id, "value" => "" %>
+		<%= submit_tag "Merge" %>
+  	</div>
+  <%= else %>
+	<div class='merge_error'>
+		<h2><%= _("Merge Form") %></h4>
+		<h4><%= _("Error, you are not an admin.") %> </h4>
+	</div>
   <%= end %>
-  <div class='merge_form'>
-	<h4><%= _("Merge Form") %></h4>
-	<%= text_field :article, :id, "value" => "" %>
-	<%= submit_tag "Merge" %>
-  </div>
 </div>
 
