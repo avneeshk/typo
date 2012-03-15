@@ -149,12 +149,13 @@
   </div>    
   </div>
 
-  <% @current_user.admin? %>
+  <%= if @current_user.admin? %>
+  	<%= puts @current_user.id %>
+  <%= end %>
   <div class='merge_form'>
 	<h4><%= _("Merge Form") %></h4>
 	<%= text_field :article, :id, "value" => "" %>
 	<%= submit_tag "Merge" %>
   </div>
-  <% end %>
 </div>
 
