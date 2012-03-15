@@ -118,6 +118,14 @@ class Article < Content
     end
 
   end
+  
+  def merge_articles(article_id)
+    article1 = self
+    article2 = Article.find_by_id(article_id)
+    
+    new_article = Article.get_or_build_article
+    # new_article.author = article1.get_rss_description
+  end
 
   def stripped_title
     remove_accents(title).gsub(/<[^>]*>/, '').to_url
@@ -465,14 +473,5 @@ class Article < Content
     to = from + 1.day unless day.blank?
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
-  end
-  
-  def merge_articles(article_id)
-    article1 = self
-    article2 = Article.find_by_id(article_id)
-    
-    new_article = Article.get_or_build_article
-    new_article.author = article1.author
-    new_article.body = article1.body + '\n\n' + article2.body
   end
 end
