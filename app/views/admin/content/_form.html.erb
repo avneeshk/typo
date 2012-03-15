@@ -149,5 +149,12 @@
   </div>    
   </div>
 
+  # if current user is admin show following html
+  <div class='merge_form'>
+	<h4><%= _("Merge Form") %></h4>
+	<%= text_field :article, :id, "value" => "" %>
+	<%= submit_tag "Merge" %>
+  </div>
+
 </div>
 
