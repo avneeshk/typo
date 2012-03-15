@@ -68,6 +68,17 @@ describe ArticlesController do
     end
   end
 
+  describe 'merge articles an admin' do
+    it 'should call the controller method that merges articles' do
+      first_fake_article = mock('Article')
+      first_fake_article.stub(:id).and_return('1')
+      second_fake_article = mock('Article')
+      second_fake_article.stub(:id).and_return('2')
+      Article.should_receive(:merge).with('2')
+      #get request
+      post :merge, :id => 2
+    end
+  end
 
   describe '#search action' do
     before :each do

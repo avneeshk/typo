@@ -603,7 +603,35 @@ describe Article do
         article.should be == already_exist_article
       end
     end
+  end
 
+  describe 'merge articles' do
+    it 'should return an article with text of both previous articles' do
+      
+      first_article = Article.get_or_build_article
+      second_article = Article.get_or_build_article
+      first_fake_article = mock('Article')
+      first_fake_article.stub(:id).and_return('1')
+      second_fake_article = mock('Article')
+      second_fake_article.stub(:id).and_return('2')
+
+     mergedArticle = first_article.merge('2')
+     mergedArticleContent =mergedArticle.body
+     expectedMergedContent = first_article.body + "\n\n" + second_article.body
+     expectedMergedContent.should == mergedArticleContent
+      #request 
+      post :merge, :id => 2
+    end
+    it 'should return a merged article with only one author' do    
+      a = Factory(:article, :author => 'Rohit', :id => 1)
+      b = Factory(:article, :author => 'Avneesh', :id => 2)
+      mergedArticle = a.merge(b.id)
+      mergedAuthor = mergedArticle.author
+      mergedAuthor.should == a.author or mergedAuthor.should == b.author
+    end
+    it 'should return comments from both original articles which point to the merged article' do
+      #a = Factory(:article, :author => 'Rohit')
+    end
   end
 end
 
