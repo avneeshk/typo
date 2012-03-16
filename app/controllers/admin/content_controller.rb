@@ -12,10 +12,15 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def merge
-    currentArticle = Article.find_by_id(params[:currentarticleid])
-    articleToMergeWith = Article.find_by_id(params[:articletomergewithid])
-    mergedArticle = currentArticle.merge_articles(params[:articletomergewithid])
-    redirect_to :action => 'index' 
+    @current_user = User.find_by_id(session['user_id'].to_i)
+    if @current_user.admin?
+      currentArticle = Article.find_by_id(params[:currentarticleid])
+      articleToMergeWith = Article.find_by_id(params[:articletomergewithid])
+      mergedArticle = currentArticle.merge_articles(params[:articletomergewithid])
+      redirect_to :action => 'index' 
+    else
+      flash[:error] = "You are not an admin"
+    end
   end
 
   def index
