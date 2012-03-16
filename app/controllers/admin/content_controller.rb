@@ -14,9 +14,12 @@ class Admin::ContentController < Admin::BaseController
   def merge
     @current_user = User.find_by_id(session['user_id'].to_i)
     if @current_user.admin?
-      currentArticle = Article.find_by_id(params[:currentarticleid])
-      articleToMergeWith = Article.find_by_id(params[:articletomergewithid])
-      mergedArticle = currentArticle.merge_articles(params[:articletomergewithid])
+      puts params[:current_article_id].to_i
+      puts (params[:article_to_merge_with])[:id].to_i
+      currentArticle = Article.find_by_id(params[:current_article_id].to_i)
+      articleToMergeWith = Article.find_by_id((params[:article_to_merge_with])[:id].to_i)
+
+      mergedArticle = currentArticle.merge_articles((params[:article_to_merge_with])[:id].to_i)
       redirect_to :action => 'index' 
     else
       flash[:error] = "You are not an admin"
@@ -36,11 +39,13 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
+    @is_edit = false
     new_or_edit
   end
 
   def edit
     @article = Article.find(params[:id])
+    @is_edit = true
     unless @article.access_by? current_user
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
@@ -154,10 +159,9 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
-    puts "FSAKLSFKALKGSA: #{id}"
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
-
+    @idOfCurrentArticle = @article.id
     @post_types = PostType.find(:all)
     if request.post?
       if params[:article][:draft]
