@@ -11,6 +11,13 @@ class Admin::ContentController < Admin::BaseController
     render :inline => "<%= raw auto_complete_result @items, 'name' %>"
   end
 
+  def merge
+    currentArticle = Article.find_by_id(params[:currentarticleid])
+    articleToMergeWith = Article.find_by_id(params[:articletomergewithid])
+    mergedArticle = currentArticle.merge_articles(params[:articletomergewithid])
+    redirect_to :action => 'index' 
+  end
+
   def index
     @search = params[:search] ? params[:search] : {}
     
@@ -142,6 +149,7 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
+    puts "FSAKLSFKALKGSA: #{id}"
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
 

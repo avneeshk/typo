@@ -122,7 +122,9 @@ class Article < Content
   def merge_articles(article_id)
     article1 = self
     article2 = Article.find_by_id(article_id)
-    new_article = Article.get_or_build_article
+    new_article = Article.new
+    new_article.save
+    new_article_id = new_article.id
     new_article.author = article1.author
     new_article.body = article1.body + '\n\n' + article2.body
 
@@ -140,6 +142,7 @@ class Article < Content
         comment.update_attribute(:article_id,  new_article.id)
       end
     end
+    return new_article
   end
 
   def stripped_title
