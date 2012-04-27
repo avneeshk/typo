@@ -124,6 +124,7 @@ class Article < Content
     article2 = Article.find_by_id(article_id)
     new_article = Article.get_or_build_article
     new_article.author = article1.author
+		new_article.user_id = article1.user_id
     new_article.body = article1.body + '\n\n' + article2.body
     new_article.title = article1.title
     new_article.published = true
