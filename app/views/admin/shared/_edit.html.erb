@@ -9,8 +9,8 @@
 	<%= form_tag({:controller => "admin/content", :action => "merge"}) %>
 	<div class='merge_form'>
 		<h4><%= _("Merge Form") %></h4>
-		<%= label_tag 'article_to_merge_with_id', 'Article ID: ' %>
-		<%= text_field :article_to_merge_with, :id, "value" => "" %>
+		<%= label_tag 'merge_with', 'Article ID: ' %>
+		<%= text_field :merge_with, :id, "value" => "" %>
 		<%= hidden_field_tag 'current_article_id', @idOfCurrentArticle.to_s %>
 		<%= submit_tag "Merge" %>
 	</div>
